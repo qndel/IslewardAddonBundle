@@ -1,4 +1,4 @@
-window.AddonBundleScriptVersion = "1.1";
+window.AddonBundleScriptVersion = "1.0";
 addons.register({
     init: function(events) {
         events.on('onGetMessages', this.onGetMessages.bind(this));
