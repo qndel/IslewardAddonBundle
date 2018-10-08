@@ -1,4 +1,5 @@
 window.AddonBundleScriptVersion = "1.0";
+window.AddonBundleScriptName = "StashSearch";
 var variableList = [];
 function recursiveDictUnpack(obj){
     var ret="";

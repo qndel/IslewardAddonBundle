@@ -1,4 +1,5 @@
 window.AddonBundleScriptVersion = "1.0";
+window.AddonBundleScriptName = "QuickReply";
 var fun = function(){
     if(jQuery(".el.textbox.message")[0] != undefined && jQuery(".el.textbox.message").val().substring(0, 2) == "/r" && window.lastReply != undefined){
         jQuery(".el.textbox.message").val(jQuery(".el.textbox.message").val().replace("/r", "@"+window.lastReply+" "));

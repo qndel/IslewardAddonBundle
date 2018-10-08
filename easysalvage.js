@@ -1,4 +1,5 @@
 window.AddonBundleScriptVersion = "1.0";
+window.AddonBundleScriptName = "EasySalvage";
 window.easySalvageData = {};
 window.easySalvageData.itemPos = -1;
 addons.register({

@@ -1,4 +1,5 @@
 window.AddonBundleScriptVersion = "1.0";
+window.AddonBundleScriptName = "BetterRuneDescriptions";
 let spells = {
     melee: {
         auto: true,

@@ -127,10 +127,10 @@ defer(
 
                         $.getScript("https://qndel.github.io/IslewardAddonBundle/"+addonBundle[i].url)
                             .done(function( script, textStatus ) {
-                            var msg = "Script " +localName+ " loaded succesfully!";
+                            var msg = "Addon " +localName+ " loaded!";
                             var color = "yellowB";
                             if(window.AddonBundleScriptVersion != localVer){
-                                msg += " [Version updated to "+window.AddonBundleScriptVersion+"]";
+                                msg += " [Updated to v."+window.AddonBundleScriptVersion+"]";
                                 data[localName].version = window.AddonBundleScriptVersion;
                                 localStorage.setObject('islewardAddonBundle',data);
 

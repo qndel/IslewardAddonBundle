@@ -1,4 +1,5 @@
 window.AddonBundleScriptVersion = "1.0";
+window.AddonBundleScriptName = "Timestamp";
 addons.register({
     init: function(events) {
         events.on('onGetMessages', this.onGetMessages.bind(this));

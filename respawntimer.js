@@ -1,4 +1,5 @@
 window.AddonBundleScriptVersion = "1.0";
+window.AddonBundleScriptName = "BossRespawn";
 addons.register({
     init: function(events) {
         events.on('onGetObject', this.onGetObject.bind(this));
