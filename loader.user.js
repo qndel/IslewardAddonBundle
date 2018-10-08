@@ -113,35 +113,33 @@ defer(
             onEnterGame: function(obj) {
                 jQuery(".addon-loader").css("display","none");
                 var data = localStorage.getObject('islewardAddonBundle');
-                for(var i = 0;i<addonBundle.length;++i){
-                    if(data !== undefined && data !== null && data[addonBundle[i].addonName] && data[addonBundle[i].addonName].shouldLoad === true){
-                        var localName = addonBundle[i].addonName;
-                        var localVer = data[addonBundle[i].addonName].version;
-                        function deferTillChat(method) {
+                function deferTillChat(method) {
                             if (jQuery(".uiMessages .list")[0] !== undefined) {
                                 method();
                             } else {
                                 setTimeout(function() { deferTillChat(method) }, 50);
                             }
-                        }
-
-                        $.getScript("https://qndel.github.io/IslewardAddonBundle/"+addonBundle[i].url)
+                }
+                for(var i = 0;i<addonBundle.length;++i){
+                    if(data !== undefined && data !== null && data[addonBundle[i].addonName] && data[addonBundle[i].addonName].shouldLoad === true){
+                         $.getScript("https://qndel.github.io/IslewardAddonBundle/"+addonBundle[i].url)
                             .done(function( script, textStatus ) {
-                            var msg = "Addon " +localName+ " loaded!";
+                            var msg = "Script " +window.AddonBundleScriptName+ " loaded succesfully!";
                             var color = "yellowB";
-                            if(window.AddonBundleScriptVersion != localVer){
-                                msg += " [Updated to v."+window.AddonBundleScriptVersion+"]";
-                                data[localName].version = window.AddonBundleScriptVersion;
+                            if(window.AddonBundleScriptVersion != data[window.AddonBundleScriptName].version){
+                                msg += " [Version updated to "+window.AddonBundleScriptVersion+"]";
+                                data[window.AddonBundleScriptName].version = window.AddonBundleScriptVersion;
                                 localStorage.setObject('islewardAddonBundle',data);
 
                             }
                             deferTillChat(function(){jQuery('<div class="list-message color-'+color+' chat">' + msg + '</div>').appendTo(jQuery(".uiMessages .list"))});
                         })
                             .fail(function( jqxhr, settings, exception ) {
-                            var msg = "Addon " +localName+ " failed to load!";
+                            var msg = "Addon " +window.AddonBundleScriptName+ " failed to load!";
                             var color = "redA";
                             deferTillChat(function(){jQuery('<div class="list-message color-'+color+' chat">' + msg + '</div>').appendTo(jQuery(".uiMessages .list"))});
                         });
+
                     }
                 }
             }
