@@ -81,18 +81,18 @@ defer(
                 window.addonLoader = jQuery('<div class="addon-loader" style="position:absolute;left:200px;"></div>').appendTo(jQuery('.ui-container'));
                 var src = tooltipStyle+'<table bgcolor="rgb(25,25,25)">';
                 for(var i=0;i<addonBundle.length;++i){
-                     var onClick =
-                    `if(jQuery('#'+this.id).text() == 'On'){
-                        jQuery('#'+this.id).text('Off');
-                        jQuery('#'+this.id).css('background','rgb(255,0,0)');
-                        window.AddonBundleChangeState(this.id.substr(6),false);
-                    }
-                    else{
-                        jQuery('#'+this.id).text('On');
-                        jQuery('#'+this.id).css('background','rgb(0,255,0)');
-                        window.AddonBundleChangeState(this.id.substr(6),true);
-                    }`
-                     var drawButton = '<button id="Button'+addonBundle[i].addonName+'" style="color:rgb(0,0,0); width:40px; background:rgb(255,0,0);" onclick="'+onClick+'" type="button">Off</button>';
+                    var onClick =
+                        `if(jQuery('#'+this.id).text() == 'On'){
+jQuery('#'+this.id).text('Off');
+jQuery('#'+this.id).css('background','rgb(255,0,0)');
+window.AddonBundleChangeState(this.id.substr(6),false);
+}
+else{
+jQuery('#'+this.id).text('On');
+jQuery('#'+this.id).css('background','rgb(0,255,0)');
+window.AddonBundleChangeState(this.id.substr(6),true);
+}`
+                    var drawButton = '<button id="Button'+addonBundle[i].addonName+'" style="color:rgb(0,0,0); width:40px; background:rgb(255,0,0);" onclick="'+onClick+'" type="button">Off</button>';
                     if(localStorageAddonData && localStorageAddonData[addonBundle[i].addonName] && localStorageAddonData[addonBundle[i].addonName].shouldLoad === true){
                         drawButton = '<button id="Button'+addonBundle[i].addonName+'" style="color:rgb(0,0,0); width:40px; background:rgb(0,255,0);" onclick="'+onClick+'" type="button">On</button>';
                     } else{
@@ -114,20 +114,20 @@ defer(
                 jQuery(".addon-loader").css("display","none");
                 var data = localStorage.getObject('islewardAddonBundle');
                 function deferTillChat(method) {
-                            if (jQuery(".uiMessages .list")[0] !== undefined) {
-                                method();
-                            } else {
-                                setTimeout(function() { deferTillChat(method) }, 50);
-                            }
+                    if (jQuery(".uiMessages .list")[0] !== undefined) {
+                        method();
+                    } else {
+                        setTimeout(function() { deferTillChat(method) }, 50);
+                    }
                 }
                 for(var i = 0;i<addonBundle.length;++i){
                     if(data !== undefined && data !== null && data[addonBundle[i].addonName] && data[addonBundle[i].addonName].shouldLoad === true){
-                         $.getScript("https://qndel.github.io/IslewardAddonBundle/"+addonBundle[i].url)
+                        $.getScript("https://qndel.github.io/IslewardAddonBundle/"+addonBundle[i].url)
                             .done(function( script, textStatus ) {
-                            var msg = "Script " +window.AddonBundleScriptName+ " loaded succesfully!";
+                            var msg = "Addon " +window.AddonBundleScriptName+ " loaded";
                             var color = "yellowB";
                             if(window.AddonBundleScriptVersion != data[window.AddonBundleScriptName].version){
-                                msg += " [Version updated to "+window.AddonBundleScriptVersion+"]";
+                                msg += " [updated to v."+window.AddonBundleScriptVersion+"]";
                                 data[window.AddonBundleScriptName].version = window.AddonBundleScriptVersion;
                                 localStorage.setObject('islewardAddonBundle',data);
 
