@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Isleward - Addon Bundle Loader
 // @namespace    Isleward.Addon
-// @version      0.1
+// @version      0.2
 // @description  Loads Addon Bundle
 // @author       Qndel
 // @match        play.isleward.com*
