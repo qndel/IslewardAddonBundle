@@ -62,7 +62,7 @@ function deferTillData(method) {
 function defer(method) {
     if (window.jQuery) {
 	jQuery.getScript("https://qndel.github.io/IslewardAddonBundle/addondata.js").done(function( script, textStatus ) {window.addonBundleLoadedData=true;}).fail(function( jqxhr, settings, exception ) {});
-        deferTillData(method);
+	deferTillData(method);
     } else {
         setTimeout(function() { defer(method) }, 50);
     }
