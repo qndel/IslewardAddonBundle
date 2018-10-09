@@ -1,4 +1,4 @@
-window.AddonBundleScriptVersion = "1.0";
+window.AddonBundleScriptVersion = "1.1";
 window.AddonBundleScriptName = "CombatLog";
 var idToName = {};
 var inCombatWith = {};
