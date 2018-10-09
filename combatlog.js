@@ -13,6 +13,7 @@ addons.register({
     init: function(events) {
         events.on('onGetDamage',this.onGetDamage.bind(this));
         events.on('onGetObject',this.onGetObject.bind(this));
+		events.on('onGetSpellCooldowns', this.onGetSpellCooldowns.bind(this));
     },
     onGetDamage: function(dmg) {
         if(dmg.crit !== undefined){
@@ -47,5 +48,10 @@ addons.register({
                 delete inCombatWith[obj.id];
             }
         }
+    },
+	onGetSpellCooldowns: function(spell) {
+        if(spell.id !== undefined && spell.id == player.id && spell.spell !== undefined){
+			addCombatMessage("You cast "+player.spellbook.getSpell(spell.spell).name);
+		}
     }
 });
