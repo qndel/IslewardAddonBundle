@@ -7,14 +7,6 @@
 // @match        play.isleward.com*
 // @grant        none
 // ==/UserScript==
-var addonBundle = [{addonName: "Timestamp", shortName:"timestamp", url:"timestamp.js", hoverText: "shows time next to messages"},
-                   {addonName: "EasySalvage", shortName:"easy salvage", url:"easysalvage.js", hoverText: "press B to salvage item under cursor"},
-                   {addonName: "StashSearch", shortName:"search stash", url:"searchstash.js", hoverText: "adds a search tab in stash and highlights items that meet search requirements"},
-                   {addonName: "BetterRuneDescriptions", shortName:"better rune info", url:"expandedrunedescriptions.js", hoverText: "shows the min/max stat range for runes"},
-                   {addonName: "QuickReply", shortName:"quick reply", url:"quickreply.js", hoverText: "allows to reply to last whisper by writing /r"},
-                   {addonName: "Minimap", shortName:"minimap", url:"minimap.js", hoverText: "Press N to see minimap."},
-                   {addonName: "BossRespawn", shortName:"mogresh respawn", url:"respawntimer.js", hoverText: "Shows time to next Mogresh respawn in the events section."}
-                  ];
 var tooltipStyle =
     `<style>
 /* Tooltip container */
@@ -47,6 +39,8 @@ visibility: visible;
 }
 </style>
 `;
+
+window.addonBundleLoadedData = false;
 Storage.prototype.setObject = function(key, value) {
     this.setItem(key, JSON.stringify(value));
 }
@@ -55,9 +49,20 @@ Storage.prototype.getObject = function(key) {
     var value = this.getItem(key);
     return value && JSON.parse(value);
 }
+
+function deferTillData(method) {
+    if (window.addonBundleLoadedData === true) {
+        method();
+    } else {
+        setTimeout(function() { deferTillData(method) }, 50);
+    }
+}
+
+
 function defer(method) {
     if (window.jQuery) {
-        method();
+	jQuery.getScript("https://qndel.github.io/IslewardAddonBundle/addondata.js").done(function( script, textStatus ) {window.addonBundleLoadedData=true;}).fail(function( jqxhr, settings, exception ) {});
+        deferTillData(method());
     } else {
         setTimeout(function() { defer(method) }, 50);
     }
@@ -80,7 +85,7 @@ defer(
                 var localStorageAddonData = localStorage.getObject('islewardAddonBundle');
                 window.addonLoader = jQuery('<div class="addon-loader" style="position:absolute;left:200px;"></div>').appendTo(jQuery('.ui-container'));
                 var src = tooltipStyle+'<table bgcolor="rgb(25,25,25)">';
-                for(var i=0;i<addonBundle.length;++i){
+                for(var i=0;i<window.addonBundle.length;++i){
                     var onClick =
                         `if(jQuery('#'+this.id).text() == 'On'){
 jQuery('#'+this.id).text('Off');
@@ -120,7 +125,7 @@ window.AddonBundleChangeState(this.id.substr(6),true);
                         setTimeout(function() { deferTillChat(method) }, 50);
                     }
                 }
-                for(var i = 0;i<addonBundle.length;++i){
+                for(var i = 0;i<window.addonBundle.length;++i){
                     if(data !== undefined && data !== null && data[addonBundle[i].addonName] && data[addonBundle[i].addonName].shouldLoad === true){
                         $.getScript("https://qndel.github.io/IslewardAddonBundle/"+addonBundle[i].url)
                             .done(function( script, textStatus ) {
