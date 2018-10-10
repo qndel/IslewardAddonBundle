@@ -1,4 +1,4 @@
-window.AddonBundleScriptVersion = "1.1";
+window.AddonBundleScriptVersion = "1.2";
 window.AddonBundleScriptName = "CombatLog";
 var idToName = {};
 var inCombatWith = {};
@@ -19,11 +19,11 @@ addons.register({
         if(dmg.crit !== undefined){
             if(dmg.id !== undefined && dmg.source !== undefined){
                 var enemyName;
-                if(dmg.source == player.id){
+                if(player !== undefined && dmg.source == player.id){
                     inCombatWith[dmg.id] = true;
                     enemyName = idToName[dmg.id];
                     addCombatMessage("You "+(dmg.crit == true ? "critically ":"")+"hit "+enemyName+" for "+ (~~dmg.amount) +" damage.");
-                } else if(dmg.id == player.id){
+                } else if(player !== undefined && dmg.id == player.id){
                     enemyName = idToName[dmg.source];
                     inCombatWith[dmg.source] = true;
                     addCombatMessage(enemyName+(dmg.crit == true ? " critically":"")+" hits you for "+ (~~dmg.amount) +" damage.");
@@ -31,7 +31,7 @@ addons.register({
             }
         } else{
             if(dmg.event !== undefined){
-                if(dmg.id == player.id && dmg.text.indexOf(" xp") != -1){
+                if(player !== undefined && dmg.id == player.id && dmg.text.indexOf(" xp") != -1){
                     addCombatMessage("You gained "+dmg.text+".");
                 }
             }
@@ -50,7 +50,7 @@ addons.register({
         }
     },
 	onGetSpellCooldowns: function(spell) {
-        if(spell.id !== undefined && spell.id == player.id && spell.spell !== undefined){
+        if(spell.id !== undefined && player !== undefined && spell.id == player.id && spell.spell !== undefined){
 			addCombatMessage("You cast "+player.spellbook.getSpell(spell.spell).name);
 		}
     }
