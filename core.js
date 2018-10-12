@@ -109,6 +109,7 @@ defer(
             },
 
             onEnterGame: function(obj) {
+				if(window.bundleLoadedAlready===true){return;}
                 jQuery(".addon-loader").css("display","none");
                 var data = localStorage.getObject('islewardAddonBundle');
                 function deferTillChat(method) {
@@ -140,6 +141,7 @@ defer(
 
                     }
                 }
+				window.bundleLoadedAlready=true;
             }
         });
     }));
