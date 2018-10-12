@@ -7,4 +7,4 @@
 // @match        play.isleward.com*
 // @grant        none
 // ==/UserScript==
-var d=m=>(window.$?m():setTimeout(()=>d(m),50));d(()=>$.getScript("https://qndel.github.io/IslewardAddonBundle/core.js"))
+var d=a=>window.$?$.getScript`https://qndel.github.io/IslewardAddonBundle/core.js`:setTimeout(d,50);d()

@@ -55,27 +55,22 @@ function defer(method) {
         setTimeout(function() { defer(method) }, 50);
     }
 }
-defer(
-    (function () {
-        addons.register({
-            init: function(events) {
-                events.on('onResourcesLoaded', this.onResourcesLoaded.bind(this));
-                events.on('onEnterGame', this.onEnterGame.bind(this));
-            },
-            onResourcesLoaded: function(obj) {
-                window.AddonBundleChangeState = function(addonName,addonState){
-                    var myData = localStorage.getObject('islewardAddonBundle');
-                    if(myData !== undefined && myData !== null && myData[addonName]){
-                        myData[addonName].shouldLoad=addonState;
-                    }
-                    localStorage.setObject('islewardAddonBundle',myData);
-                }
-                var localStorageAddonData = localStorage.getObject('islewardAddonBundle');
-                window.addonLoader = jQuery('<div class="addon-loader" style="position:absolute;left:200px;"></div>').appendTo(jQuery('.ui-container'));
-                var src = tooltipStyle+'<table bgcolor="rgb(25,25,25)">';
-                for(var i=0;i<window.addonBundle.length;++i){
-                    var onClick =
-                        `if(jQuery('#'+this.id).text() == 'On'){
+
+window.AddonBundleChangeState = function(addonName,addonState){
+    var myData = localStorage.getObject('islewardAddonBundle');
+    if(myData !== undefined && myData !== null && myData[addonName]){
+        myData[addonName].shouldLoad=addonState;
+    }
+    localStorage.setObject('islewardAddonBundle',myData);
+}
+
+window.loadAddonBundlePanel = function(){
+    var localStorageAddonData = localStorage.getObject('islewardAddonBundle');
+    window.addonLoader = jQuery('<div class="addon-loader" style="position:absolute;left:200px;"></div>').appendTo(jQuery('.ui-container'));
+    var src = tooltipStyle+'<table bgcolor="rgb(25,25,25)">';
+    for(var i=0;i<window.addonBundle.length;++i){
+        var onClick =
+            `if(jQuery('#'+this.id).text() == 'On'){
 jQuery('#'+this.id).text('Off');
 jQuery('#'+this.id).css('background','rgb(255,0,0)');
 window.AddonBundleChangeState(this.id.substr(6),false);
@@ -85,22 +80,32 @@ jQuery('#'+this.id).text('On');
 jQuery('#'+this.id).css('background','rgb(0,255,0)');
 window.AddonBundleChangeState(this.id.substr(6),true);
 }`
-                    var drawButton = '<button id="Button'+addonBundle[i].addonName+'" style="color:rgb(0,0,0); width:40px; background:rgb(255,0,0);" onclick="'+onClick+'" type="button">Off</button>';
-                    if(localStorageAddonData && localStorageAddonData[addonBundle[i].addonName] && localStorageAddonData[addonBundle[i].addonName].shouldLoad === true){
-                        drawButton = '<button id="Button'+addonBundle[i].addonName+'" style="color:rgb(0,0,0); width:40px; background:rgb(0,255,0);" onclick="'+onClick+'" type="button">On</button>';
-                    } else{
-                        if(localStorageAddonData === undefined || localStorageAddonData === null){
-                            localStorageAddonData = {};
-                        }
-                        if(localStorageAddonData && localStorageAddonData[addonBundle[i].addonName] === undefined){
-                            localStorageAddonData[addonBundle[i].addonName] = {shouldLoad:false, version:"0.0"};
-                            localStorage.setObject('islewardAddonBundle',localStorageAddonData);
-                        }
-                    }
-                    src += '<tr><td><div class="tooltip"><font color="orange">'+addonBundle[i].shortName+'</font><span class="tooltiptext">'+addonBundle[i].hoverText+'</span></div></td><td>'+drawButton+'</td>';
-                }
-                src += "</table>";
-                window.addonLoader.html(src);
+        var drawButton = '<button id="Button'+addonBundle[i].addonName+'" style="color:rgb(0,0,0); width:40px; background:rgb(255,0,0);" onclick="'+onClick+'" type="button">Off</button>';
+        if(localStorageAddonData && localStorageAddonData[addonBundle[i].addonName] && localStorageAddonData[addonBundle[i].addonName].shouldLoad === true){
+            drawButton = '<button id="Button'+addonBundle[i].addonName+'" style="color:rgb(0,0,0); width:40px; background:rgb(0,255,0);" onclick="'+onClick+'" type="button">On</button>';
+        } else{
+            if(localStorageAddonData === undefined || localStorageAddonData === null){
+                localStorageAddonData = {};
+            }
+            if(localStorageAddonData && localStorageAddonData[addonBundle[i].addonName] === undefined){
+                localStorageAddonData[addonBundle[i].addonName] = {shouldLoad:false, version:"0.0"};
+                localStorage.setObject('islewardAddonBundle',localStorageAddonData);
+            }
+        }
+        src += '<tr><td><div class="tooltip"><font color="orange">'+addonBundle[i].shortName+'</font><span class="tooltiptext">'+addonBundle[i].hoverText+'</span></div></td><td>'+drawButton+'</td>';
+    }
+    src += "</table>";
+    window.addonLoader.html(src);
+}
+defer(
+    (function () {
+        addons.register({
+            init: function(events) {
+                events.on('onResourcesLoaded', this.onResourcesLoaded.bind(this));
+                events.on('onEnterGame', this.onEnterGame.bind(this));
+            },
+            onResourcesLoaded: function(obj) {
+                window.loadAddonBundlePanel();
             },
 
             onEnterGame: function(obj) {
