@@ -1,4 +1,4 @@
-window.AddonBundleScriptVersion = "1.2";
+window.AddonBundleScriptVersion = "1.3";
 window.AddonBundleScriptName = "CombatLog";
 var idToName = {};
 var inCombatWith = {};
@@ -19,14 +19,18 @@ addons.register({
         if(dmg.crit !== undefined){
             if(dmg.id !== undefined && dmg.source !== undefined){
                 var enemyName;
+				var action="hit";
+				if(dmg.heal !== undefined && dmg.heal == true){
+					action="heal";
+				}
                 if(player !== undefined && dmg.source == player.id){
                     inCombatWith[dmg.id] = true;
                     enemyName = idToName[dmg.id];
-                    addCombatMessage("You "+(dmg.crit == true ? "critically ":"")+"hit "+enemyName+" for "+ (~~dmg.amount) +" damage.");
+                    addCombatMessage("You "+(dmg.crit == true ? "critically ":"")+action+" "+enemyName+" for "+ (~~dmg.amount) +" damage.");
                 } else if(player !== undefined && dmg.id == player.id){
                     enemyName = idToName[dmg.source];
                     inCombatWith[dmg.source] = true;
-                    addCombatMessage(enemyName+(dmg.crit == true ? " critically":"")+" hits you for "+ (~~dmg.amount) +" damage.");
+                    addCombatMessage(enemyName+(dmg.crit == true ? " critically":"")+" "+action+"s you for "+ (~~dmg.amount) +" damage.");
                 }
             }
         } else{
