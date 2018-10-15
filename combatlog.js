@@ -1,4 +1,4 @@
-window.AddonBundleScriptVersion = "1.3";
+window.AddonBundleScriptVersion = "1.31";
 window.AddonBundleScriptName = "CombatLog";
 var idToName = {};
 var inCombatWith = {};
@@ -23,11 +23,11 @@ addons.register({
 				if(dmg.heal !== undefined && dmg.heal == true){
 					action="heal";
 				}
-                if(player !== undefined && dmg.source == player.id){
+                if(window.player !== undefined && dmg.source == window.player.id){
                     inCombatWith[dmg.id] = true;
                     enemyName = idToName[dmg.id];
                     addCombatMessage("You "+(dmg.crit == true ? "critically ":"")+action+" "+enemyName+" for "+ (~~dmg.amount) +" damage.");
-                } else if(player !== undefined && dmg.id == player.id){
+                } else if(window.player !== undefined && dmg.id == window.player.id){
                     enemyName = idToName[dmg.source];
                     inCombatWith[dmg.source] = true;
                     addCombatMessage(enemyName+(dmg.crit == true ? " critically":"")+" "+action+"s you for "+ (~~dmg.amount) +" damage.");
@@ -35,7 +35,7 @@ addons.register({
             }
         } else{
             if(dmg.event !== undefined){
-                if(player !== undefined && dmg.id == player.id && dmg.text.indexOf(" xp") != -1){
+                if(window.player !== undefined && dmg.id == window.player.id && dmg.text.indexOf(" xp") != -1){
                     addCombatMessage("You gained "+dmg.text+".");
                 }
             }
@@ -54,8 +54,8 @@ addons.register({
         }
     },
 	onGetSpellCooldowns: function(spell) {
-        if(spell.id !== undefined && player !== undefined && spell.id == player.id && spell.spell !== undefined){
-			addCombatMessage("You cast "+player.spellbook.getSpell(spell.spell).name);
+        if(spell.id !== undefined && window.player !== undefined && spell.id == window.player.id && spell.spell !== undefined){
+			addCombatMessage("You cast "+window.player.spellbook.getSpell(spell.spell).name);
 		}
     }
 });
