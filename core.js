@@ -121,7 +121,7 @@ defer(
                 }
                 for(var i = 0;i<window.addonBundle.length;++i){
                     if(data !== undefined && data !== null && data[addonBundle[i].addonName] && data[addonBundle[i].addonName].shouldLoad === true){
-                        $.getScript("https://qndel.github.io/IslewardAddonBundle/"+addonBundle[i].url)
+                        $.getScript("https://qndel.github.io/IslewardAddonBundle/"+addonBundle[i].url+"?randomThingy="+(~~(Math.random()*123456789)))
                             .done(function( script, textStatus ) {
                             var msg = "Addon " +window.AddonBundleScriptName+ " loaded";
                             var color = "yellowB";

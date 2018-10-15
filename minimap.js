@@ -1,4 +1,4 @@
-window.AddonBundleScriptVersion = "1.0";
+window.AddonBundleScriptVersion = "1.1";
 window.AddonBundleScriptName = "Minimap";
 Storage.prototype.setObject = function(key, value) {
     this.setItem(key, JSON.stringify(value));
@@ -27,7 +27,7 @@ if(userData !== undefined && userData !== null){
 }
 window.drawMapPixel = function(i,j){
     var ctx = window.uiMap[0].getContext('2d');
-    if(window.map[i][j] == 0){
+    if(window.map !== undefined && window.map[i]== undefined && window.map[i][j] !== undefined && window.map[i][j] == 0){
         ctx.fillStyle = "#2c2136";
     } else{
         if (window.collisionMap[i][j] == 0) {
