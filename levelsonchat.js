@@ -1,6 +1,6 @@
 window.AddonBundleScriptVersion = "1.0";
 window.AddonBundleScriptName = "LevelsOnChat";
-var namesToLevels = {};
+window.namesToLevels = {};
 addons.register({
     init: function(events) {
         events.on('onGetMessages', this.onGetMessages.bind(this));
@@ -18,7 +18,7 @@ addons.register({
                         myReg = /\((\b[a-zA-Z]*)(\[\d{1,2}\])? to you\): \b.*/g;
                         matched = myReg.exec(obj.messages[0].message);
                         if(matched != undefined && matched.length >= 2){
-                            obj.messages[0].message = obj.messages[0].message.replace(" to you):", "["+namesToLevels[matched[1]]+"] to you):");
+                            obj.messages[0].message = obj.messages[0].message.replace(" to you):", "["+window.namesToLevels[matched[1]]+"] to you):");
                         }
                     } else if(obj.messages[0].class && obj.messages[0].class == "color-grayB"){
                         myReg = /([a-zA-Z]*):/g;
@@ -32,7 +32,7 @@ addons.register({
                         myReg = /([a-zA-Z]*) has reached level/g;
                         matched = myReg.exec(obj.messages[0].message);
                         if(matched != undefined && matched.length == 2){
-                            namesToLevels[matched[1]]++;
+                            window.namesToLevels[matched[1]]++;
                         }
                     }
                 }
@@ -41,7 +41,7 @@ addons.register({
     },
     onGetConnectedPlayer: function(obj) {
         for(var i=0;i<obj.length;++i){
-            namesToLevels[obj[i].name] = obj[i].level;
+            window.namesToLevels[obj[i].name] = obj[i].level;
         }
     }
 });
