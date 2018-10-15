@@ -102,7 +102,7 @@ defer(
         addons.register({
             init: function(events) {
                 events.on('onResourcesLoaded', this.onResourcesLoaded.bind(this));
-				events.on('onGetConnectedPlayer', this.onGetConnectedPlayer.bind(this));
+				//events.on('onGetConnectedPlayer', this.onGetConnectedPlayer.bind(this));
                 events.on('onEnterGame', this.onEnterGame.bind(this));
             },
             onResourcesLoaded: function(obj) {
