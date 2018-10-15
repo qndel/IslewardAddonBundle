@@ -1,4 +1,4 @@
-window.AddonBundleScriptVersion = "1.0";
+window.AddonBundleScriptVersion = "1.1";
 window.AddonBundleScriptName = "LevelsOnChat";
 window.namesToLevels = {};
 addons.register({
@@ -40,6 +40,8 @@ addons.register({
         }
     },
     onGetConnectedPlayer: function(obj) {
+		console.log(obj);
+		console.log("CONNECETD PLAYER FROM ADDON!");
         for(var i=0;i<obj.length;++i){
             window.namesToLevels[obj[i].name] = obj[i].level;
         }
