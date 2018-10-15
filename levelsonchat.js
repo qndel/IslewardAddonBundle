@@ -4,7 +4,6 @@ window.namesToLevels = {};
 addons.register({
     init: function(events) {
         events.on('onGetMessages', this.onGetMessages.bind(this));
-        events.on('onGetConnectedPlayer', this.onGetConnectedPlayer.bind(this));
     },
     onGetMessages: function(obj) {
         if(obj.messages){
@@ -37,13 +36,6 @@ addons.register({
                     }
                 }
             }
-        }
-    },
-    onGetConnectedPlayer: function(obj) {
-		console.log(obj);
-		console.log("CONNECETD PLAYER FROM ADDON!");
-        for(var i=0;i<obj.length;++i){
-            window.namesToLevels[obj[i].name] = obj[i].level;
         }
     }
 });

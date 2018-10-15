@@ -29,6 +29,7 @@ visibility: visible;
 `;
 
 window.addonBundleLoadedData = false;
+window.namesToLevels = {};
 Storage.prototype.setObject = function(key, value) {
     this.setItem(key, JSON.stringify(value));
 }
@@ -102,12 +103,18 @@ defer(
         addons.register({
             init: function(events) {
                 events.on('onResourcesLoaded', this.onResourcesLoaded.bind(this));
+				events.on('onGetConnectedPlayer', this.onGetConnectedPlayer.bind(this));
                 events.on('onEnterGame', this.onEnterGame.bind(this));
             },
             onResourcesLoaded: function(obj) {
                 window.loadAddonBundlePanel();
             },
-
+			
+			onGetConnectedPlayer: function(obj) {
+				for(var i=0;i<obj.length;++i){
+					window.namesToLevels[obj[i].name] = obj[i].level;
+				}
+			},
             onEnterGame: function(obj) {
 				if(window.bundleLoadedAlready===true){return;}
                 jQuery(".addon-loader").css("display","none");
