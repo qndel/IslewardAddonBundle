@@ -5,5 +5,6 @@ window.addonBundle = [{addonName: "Timestamp", shortName:"timestamp", url:"times
                       {addonName: "QuickReply", shortName:"quick reply", url:"quickreply.js", hoverText: "allows to reply to last whisper by writing /r"},
                       {addonName: "Minimap", shortName:"minimap", url:"minimap.js", hoverText: "Press N to see minimap."},
                       {addonName: "BossRespawn", shortName:"mogresh respawn", url:"respawntimer.js", hoverText: "Shows time to next Mogresh respawn in the events section."},
-                      {addonName: "CombatLog", shortName:"combat log", url:"combatlog.js", hoverText: "Displays combat info on chat."}
+                      {addonName: "CombatLog", shortName:"combat log", url:"combatlog.js", hoverText: "Displays combat info on chat."},
+					  {addonName: "LevelsOnChat", shortName:"lvls on chat", url:"levelsonchat.js", hoverText: "Displays levels next to players' names on chat."}
                      ];
