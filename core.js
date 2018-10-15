@@ -104,7 +104,6 @@ defer(
             init: function(events) {
                 events.on('onResourcesLoaded', this.onResourcesLoaded.bind(this));
 				events.on('onGetConnectedPlayer', this.onGetConnectedPlayer.bind(this));
-				console.log("BINDING EVENTS");
                 events.on('onEnterGame', this.onEnterGame.bind(this));
             },
             onResourcesLoaded: function(obj) {
@@ -112,8 +111,6 @@ defer(
             },
 			
 			onGetConnectedPlayer: function(obj) {
-				console.log("ON GET CONNECTED PLAYER (FROM ADDON)");
-				console.log(obj);
 				for(var i=0;i<obj.length;++i){
 					window.namesToLevels[obj[i].name] = obj[i].level;
 				}

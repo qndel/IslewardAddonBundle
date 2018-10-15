@@ -1,6 +1,5 @@
-window.AddonBundleScriptVersion = "1.1";
+window.AddonBundleScriptVersion = "1.2";
 window.AddonBundleScriptName = "LevelsOnChat";
-window.namesToLevels = {};
 addons.register({
     init: function(events) {
         events.on('onGetMessages', this.onGetMessages.bind(this));
