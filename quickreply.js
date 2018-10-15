@@ -14,7 +14,7 @@ addons.register({
         if(msg.messages && msg.messages[0] != undefined && msg.messages[0].type != undefined && msg.messages[0].type == "chat" && msg.messages[0].message != undefined){
             var myReg =   /\((\b[a-zA-Z]*)(\[\d{1,2}\])? to you\): \b.*/g;
             var matched = myReg.exec(msg.messages[0].message);
-            if(matched != undefined && matched.length == 2){
+            if(matched != undefined && matched.length >= 2){
                 window.lastReply = matched[1];
             }
         }
